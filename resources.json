@@ -18,62 +18,62 @@
       {
         "id": 4,
         "name": "Jane Doe",
-        "category": "Person"
+        "type": "Person"
       },
       {
         "id": 5,
         "name": "Bob's Truck",
-        "category": "Vehicle"
+        "type": "Vehicle"
       },
       {
         "id": 6,
         "name": "Hammer",
-        "category": "Tool"
+        "type": "Tool"
       },
       {
         "id": 7,
         "name": "John Smith",
-        "category": "Person"
+        "type": "Person"
       },
       {
         "id": 8,
         "name": "Tesla Model S",
-        "category": "Vehicle"
+        "type": "Vehicle"
       },
       {
         "id": 9,
         "name": "Saw",
-        "category": "Tool"
+        "type": "Tool"
       },
       {
         "id": 10,
         "name": "Jack Smith",
-        "category": "Person"
+        "type": "Person"
       },
       {
         "id": 11,
         "name": "Honda Civic",
-        "category": "Vehicle"
+        "type": "Vehicle"
       },
       {
         "id": 12,
         "name": "Drill Bits",
-        "category": "Tool"
+        "type": "Tool"
       },
       {
         "id": 13,
         "name": "Jane Smith",
-        "category": "Person"
+        "type": "Person"
       },
       {
         "id": 14,
         "name": "BMW X5",
-        "category": "Vehicle"
+        "type": "Vehicle"
       },
       {
         "id": 15,
         "name": "Screwdriver",
-        "category": "Tool"
+        "type": "Tool"
       }
     ]
 }

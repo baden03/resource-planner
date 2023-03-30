@@ -85,20 +85,24 @@ function handleTimelineScroll() {
     loadDaysToTheRight();
   }
 }
+
 // listens for dropping events
 function handleDrop(event) {
   event.preventDefault();
   const projectId = event.target.dataset.id;
   const resourceId = event.dataTransfer.getData('text/plain');
+  console.log(projectId, resourceId);
   const assignedResources = event.target.dataset.resources ? event.target.dataset.resources.split(',') : [];
   if (!assignedResources.includes(resourceId)) {
     console.log(resourceId); // log the resource id to the console
+  /*   
     assignedResources.push(resourceId);
     event.target.setAttribute('data-resources', assignedResources.join());
     const assignedResourcesList = event.target.querySelector('.assigned-resources');
     const resourceCard = document.querySelector(`[data-id="${resourceId}"]`);
     const assignedResourceItem = createAssignedResourceItem(resourceCard);
     assignedResourcesList.appendChild(assignedResourceItem);
+  */
   } else {
     console.log('resource already present'); // log a message to the console if the resource is already assigned
   }
@@ -282,10 +286,7 @@ function displayProjects(projects, startDate, endDate) {
 
     const projectNameElement = document.createElement('div');
     projectNameElement.classList.add('project-name');
-    projectNameElement.textContent = project.name;
-
-    projectElement.addEventListener('drop', handleDrop); 
-    
+    projectNameElement.textContent = project.name; 
     projectElement.appendChild(projectNameElement);
 
     // Create resource dropzone element
@@ -304,6 +305,19 @@ function displayProjects(projects, startDate, endDate) {
     });
     projectElement.appendChild(resourceDropzoneElement);
 
+    projectElement.addEventListener('dragover', function(event) {
+      event.preventDefault(); // Prevent default action
+      // Add hover class to the element
+      projectElement.classList.add('hover');
+    });
+
+    projectElement.addEventListener('dragleave', function(event) {
+      // Remove hover class from the element
+      projectElement.classList.remove('hover');
+    });
+
+    projectElement.addEventListener('drop', handleDrop);
+
     // Check for overlaps with previously placed projects and adjust top
     let top = 0;
     for (const placedProject of placedProjects) {
@@ -312,9 +326,7 @@ function displayProjects(projects, startDate, endDate) {
       }
     }
     projectElement.style.top = `${top}px`;
-
     placedProjects.add({ startDate: projectStartDate, endDate: projectEndDate, top });
-
     projectElements.push(projectElement);
   });
 

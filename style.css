@@ -139,7 +139,7 @@ main {
   transition: transform 0.2s ease-out;
 }
 
-.projects .project:hover {
+.projects .project:hover, .projects .project.hover {
   height: auto;
   z-index: 99;
 }

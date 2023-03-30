@@ -1,0 +1,80 @@
+{
+    "resources": [
+      {
+        "id": 1,
+        "name": "Monkey Monk",
+        "type": "Person"
+      },
+      {
+        "id": 2,
+        "name": "Banana Man",
+        "type": "Person"
+      },
+      {
+        "id": 3,
+        "name": "Coconut Cowboy",
+        "type": "Person"
+      },
+      {
+        "id": 4,
+        "name": "Jane Doe",
+        "category": "Person"
+      },
+      {
+        "id": 5,
+        "name": "Bob's Truck",
+        "category": "Vehicle"
+      },
+      {
+        "id": 6,
+        "name": "Hammer",
+        "category": "Tool"
+      },
+      {
+        "id": 7,
+        "name": "John Smith",
+        "category": "Person"
+      },
+      {
+        "id": 8,
+        "name": "Tesla Model S",
+        "category": "Vehicle"
+      },
+      {
+        "id": 9,
+        "name": "Saw",
+        "category": "Tool"
+      },
+      {
+        "id": 10,
+        "name": "Jack Smith",
+        "category": "Person"
+      },
+      {
+        "id": 11,
+        "name": "Honda Civic",
+        "category": "Vehicle"
+      },
+      {
+        "id": 12,
+        "name": "Drill Bits",
+        "category": "Tool"
+      },
+      {
+        "id": 13,
+        "name": "Jane Smith",
+        "category": "Person"
+      },
+      {
+        "id": 14,
+        "name": "BMW X5",
+        "category": "Vehicle"
+      },
+      {
+        "id": 15,
+        "name": "Screwdriver",
+        "category": "Tool"
+      }
+    ]
+}
+  

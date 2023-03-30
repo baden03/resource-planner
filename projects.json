@@ -1,0 +1,61 @@
+{
+    "projects": [  
+        {    
+            "id": 1,    
+            "name": "Project 1",   
+            "color": "#f44336",    
+            "start_date": "2023-03-30",    
+            "end_date": "2023-04-12",    
+            "resources": [1, 2, 3, 4, 5]
+        },
+        {
+            "id": 2,
+            "name": "Project 2",
+            "color": "#9c27b0",
+            "start_date": "2023-04-10",
+            "end_date": "2023-04-18",
+            "resources": [2, 4, 6]
+        },
+        {
+            "id": 3,
+            "name": "Project 3",
+            "color": "#f44336",
+            "start_date": "2023-05-12",
+            "end_date": "2023-05-22",
+            "resources": [2, 4, 6]
+        },
+        {
+            "id": 4,
+            "name": "Project 4",
+            "color": "#2196f3",
+            "start_date": "2023-05-20",
+            "end_date": "2023-05-29",
+            "resources": [1, 3, 5]
+        },
+        {
+            "id": 5,
+            "name": "Project 5",
+            "color": "#f44336",
+            "start_date": "2023-06-07",
+            "end_date": "2023-06-17",
+            "resources": [1, 3, 5]
+        },
+        {
+            "id": 6,
+            "name": "Project 6",
+            "color": "#2196f3",
+            "start_date": "2023-05-21",
+            "end_date": "2023-06-03",
+            "resources": [1, 3, 5]
+        },
+        {
+            "id": 8,
+            "name": "Project 7",
+            "color": "#9c27b0",
+            "start_date": "2023-06-24",
+            "end_date": "2023-07-17",
+            "resources": [1, 3]
+        }
+    ]
+}
+  

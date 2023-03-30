@@ -210,8 +210,12 @@ function displayProjects(projects, startDate, endDate) {
     const daysSinceStart = Math.round((projectStartDate - startDate) / (1000 * 60 * 60 * 24));
     const dayElementWidth = document.querySelector('.day').offsetWidth;
     const left = dayElementWidth * daysSinceStart;
-    const width = dayElementWidth * projectDateSpan;
-
+    let width = dayElementWidth * projectDateSpan;
+    if( projectEndDate > endDate ){
+      const projCropDateSpan = Math.round((endDate - projectStartDate) / (1000 * 60 * 60 * 24)) + 1;
+      width = dayElementWidth * projCropDateSpan;
+    }
+    
     const projectElement = document.createElement('div');
     projectElement.classList.add('project');
     projectElement.style.backgroundColor = project.color;
@@ -246,24 +250,51 @@ function displayProjects(projects, startDate, endDate) {
     });
     projectElement.appendChild(resourceDropzoneElement);
 
+    // clicky clicky
+    projectElement.addEventListener('click', (event) => {
+      const allProjects = document.querySelectorAll('.project');
+      allProjects.forEach((project) => {
+        if (project !== projectElement) {
+          project.classList.remove('hover');
+        }
+      });
+      projectElement.classList.toggle('hover');
+    });
+
     // dragover the project
     projectElement.addEventListener('dragover', function(event) {
       event.preventDefault(); // Prevent default action
       // Add hover class to the element
-      projectElement.classList.add('hover');
+      //projectElement.classList.add('hover');
     });
 
     // drag out of the project
     projectElement.addEventListener('dragleave', function(event) {
       // Remove hover class from the element
-      projectElement.classList.remove('hover');
+      //projectElement.classList.remove('hover');
     });
 
     // bombs away!
     projectElement.addEventListener('drop', function(event) {
-      projectElement.classList.remove('hover');
-      const resourceId = event.dataTransfer.getData('text/plain')
-      console.log(resourceId, project.id, project.resources);
+      //projectElement.classList.remove('hover');
+      const resourceId = parseInt(event.dataTransfer.getData('text/plain'));
+      const assignedResources = project.resources;
+      console.log(resourceId, assignedResources);
+      if (!assignedResources.includes(resourceId)) {
+        console.log("welcome to the project: ", resourceId);
+        alert("welcome to " + project.name + " resource: " + resourceId);
+        /*   
+          assignedResources.push(resourceId);
+          event.target.setAttribute('data-resources', assignedResources.join());
+          const assignedResourcesList = event.target.querySelector('.assigned-resources');
+          const resourceCard = document.querySelector(`[data-id="${resourceId}"]`);
+          const assignedResourceItem = createAssignedResourceItem(resourceCard);
+          assignedResourcesList.appendChild(assignedResourceItem);
+        */
+      } else {
+        console.log('resource already present');
+        alert("resource already present");
+      }
     });
 
     // Check for overlaps with previously placed projects and adjust top

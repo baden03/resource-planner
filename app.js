@@ -85,6 +85,24 @@ function handleTimelineScroll() {
     loadDaysToTheRight();
   }
 }
+// listens for dropping events
+function handleDrop(event) {
+  event.preventDefault();
+  const projectId = event.target.dataset.id;
+  const resourceId = event.dataTransfer.getData('text/plain');
+  const assignedResources = event.target.dataset.resources ? event.target.dataset.resources.split(',') : [];
+  if (!assignedResources.includes(resourceId)) {
+    console.log(resourceId); // log the resource id to the console
+    assignedResources.push(resourceId);
+    event.target.setAttribute('data-resources', assignedResources.join());
+    const assignedResourcesList = event.target.querySelector('.assigned-resources');
+    const resourceCard = document.querySelector(`[data-id="${resourceId}"]`);
+    const assignedResourceItem = createAssignedResourceItem(resourceCard);
+    assignedResourcesList.appendChild(assignedResourceItem);
+  } else {
+    console.log('resource already present'); // log a message to the console if the resource is already assigned
+  }
+}
 
 // checks if a given date is the first day of its respective month.
 function isFirstDayOfMonth(date) {
@@ -165,6 +183,7 @@ function displayResources(resources) {
     const resourceCard = document.createElement('div');
     resourceCard.classList.add('card', 'resource-card');
     resourceCard.draggable = true;
+    resourceCard.dataset.resourceName = resource.name;
     resourceCard.dataset.resourceType = resource.type;
     resourceCard.dataset.resourceId = resource.id;
     resourceCard.innerHTML = `
@@ -265,7 +284,25 @@ function displayProjects(projects, startDate, endDate) {
     projectNameElement.classList.add('project-name');
     projectNameElement.textContent = project.name;
 
+    projectElement.addEventListener('drop', handleDrop); 
+    
     projectElement.appendChild(projectNameElement);
+
+    // Create resource dropzone element
+    const resourceDropzoneElement = document.createElement('div');
+    resourceDropzoneElement.classList.add('resource-dropzone');
+    resourceDropzoneElement.setAttribute('data-project-id', project.id);
+    
+    // Add assigned resources
+    project.resources.forEach((resourceId) => {
+      const assignedResourceElement = document.createElement('li');
+      const resourceElem = document.querySelector('.resource-card[data-resource-id="' + resourceId + '"]');
+      assignedResourceElement.classList.add('assigned-resource');
+      assignedResourceElement.dataset.resourceId = resourceId;
+      assignedResourceElement.textContent = resourceElem.dataset.resourceName;
+      resourceDropzoneElement.appendChild(assignedResourceElement);
+    });
+    projectElement.appendChild(resourceDropzoneElement);
 
     // Check for overlaps with previously placed projects and adjust top
     let top = 0;
@@ -303,7 +340,7 @@ function setTimelineContainerHeight() {
       maxHeight = projectHeight;
     }
   }
-  maxHeight += 90;
+  maxHeight += 170;
   // Set the height of the timeline container
   container.style.height = `${maxHeight}px`;
   scrollContainer.style.height = `${maxHeight}px`;

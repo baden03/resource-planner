@@ -28,16 +28,16 @@ main {
 }
 
 /* Style the resource card */
-.resources-container {
+.resources {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0, .5rem;
   background-color: #f8f9fa;
   min-height: 100%;
 }
 
 .resource-card {
-  margin-bottom: 1rem;
+  margin-bottom: .2rem;
   cursor: move;
   background-color: white;
   border: 1px solid #dee2e6;
@@ -51,7 +51,7 @@ main {
 .resource-card .resource-name {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .resource-card .resource-category {
@@ -122,6 +122,7 @@ main {
   text-shadow: 0px 1px 1px rgba(0,0,0,0.5);
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .projects .project:before {
@@ -139,7 +140,8 @@ main {
   transition: transform 0.2s ease-out;
 }
 
-.projects .project:hover, .projects .project.hover {
+/*.projects .project:hover,*/
+.projects .project.hover {
   height: auto;
   z-index: 99;
 }
@@ -148,4 +150,29 @@ main {
   font-weight: normal;
   font-size: 12px;
   text-shadow: none;
+}
+
+/* Styling for the pagination container */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Styling for the pagination buttons */
+.pagination button {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  color: #333333;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 5px 10px;
+}
+
+/* Styling for the active pagination button */
+.pagination button.active {
+  background-color: #333333;
+  color: #ffffff;
 }

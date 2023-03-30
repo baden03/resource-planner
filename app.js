@@ -86,28 +86,6 @@ function handleTimelineScroll() {
   }
 }
 
-// listens for dropping events
-function handleDrop(event) {
-  event.preventDefault();
-  const projectId = event.target.dataset.id;
-  const resourceId = event.dataTransfer.getData('text/plain');
-  console.log(projectId, resourceId);
-  const assignedResources = event.target.dataset.resources ? event.target.dataset.resources.split(',') : [];
-  if (!assignedResources.includes(resourceId)) {
-    console.log(resourceId); // log the resource id to the console
-  /*   
-    assignedResources.push(resourceId);
-    event.target.setAttribute('data-resources', assignedResources.join());
-    const assignedResourcesList = event.target.querySelector('.assigned-resources');
-    const resourceCard = document.querySelector(`[data-id="${resourceId}"]`);
-    const assignedResourceItem = createAssignedResourceItem(resourceCard);
-    assignedResourcesList.appendChild(assignedResourceItem);
-  */
-  } else {
-    console.log('resource already present'); // log a message to the console if the resource is already assigned
-  }
-}
-
 // checks if a given date is the first day of its respective month.
 function isFirstDayOfMonth(date) {
   return date.getDate() === 1;
@@ -196,50 +174,12 @@ function displayResources(resources) {
         <div class="resource-category">${resource.type}</div>
       </div>
     `;
-    resourceContainer.appendChild(resourceCard);
-  });
-
-  // Add dragstart event listener to parent element
-  resourceContainer.addEventListener('dragstart', event => {
-    // Find the closest .resource element to the target
-    const resource = event.target.closest('.resource');
-    if (resource) {
-      const resourceType = resource.dataset.resourceType;
-      const resourceId = resource.dataset.resourceId;
-      event.dataTransfer.setData('text/plain', `${resourceType}:${resourceId}`);
-    
-      // Create a 'ghost' element that will follow the mouse
-      const ghostElement = resource.cloneNode(true);
-      ghostElement.classList.add('ghost');
-      document.body.appendChild(ghostElement);
-    
-      // Set the initial position of the 'ghost' element to be on top of the resource being dragged
-      const resourceRect = resource.getBoundingClientRect();
-      ghostElement.style.left = `${resourceRect.left}px`;
-      ghostElement.style.top = `${resourceRect.top}px`;
-    
-      // Set the dataTransfer property to the resource being dragged, so it can be accessed in the drop event
-      event.dataTransfer.setDragImage(ghostElement, 0, 0);
-    
-      // Add a class to the resource being dragged to show it's being dragged
-      resource.classList.add('dragging');
-    }
-
-    // Add dragend event listener to parent element
-    resourceContainer.addEventListener('dragend', event => {
-      // Find the closest .resource element to the target
-      const resource = event.target.closest('.resource');
-      if (resource) {
-        // Remove the 'ghost' element from the DOM
-        const ghostElement = document.querySelector('.ghost');
-        if (ghostElement) {
-          ghostElement.parentNode.removeChild(ghostElement);
-        }
-    
-        // Remove the class that shows the resource being dragged
-        resource.classList.remove('dragging');
-      }
+    resourceCard.addEventListener('dragstart', (event) => {
+      const resourceId = resource.id;
+      event.dataTransfer.setData('text/plain', resourceId);
     });
+
+    resourceContainer.appendChild(resourceCard);
   });
 }
 
@@ -293,6 +233,7 @@ function displayProjects(projects, startDate, endDate) {
     const resourceDropzoneElement = document.createElement('div');
     resourceDropzoneElement.classList.add('resource-dropzone');
     resourceDropzoneElement.setAttribute('data-project-id', project.id);
+    resourceDropzoneElement.dataset.resourceId = project.resources;
     
     // Add assigned resources
     project.resources.forEach((resourceId) => {
@@ -305,18 +246,25 @@ function displayProjects(projects, startDate, endDate) {
     });
     projectElement.appendChild(resourceDropzoneElement);
 
+    // dragover the project
     projectElement.addEventListener('dragover', function(event) {
       event.preventDefault(); // Prevent default action
       // Add hover class to the element
       projectElement.classList.add('hover');
     });
 
+    // drag out of the project
     projectElement.addEventListener('dragleave', function(event) {
       // Remove hover class from the element
       projectElement.classList.remove('hover');
     });
 
-    projectElement.addEventListener('drop', handleDrop);
+    // bombs away!
+    projectElement.addEventListener('drop', function(event) {
+      projectElement.classList.remove('hover');
+      const resourceId = event.dataTransfer.getData('text/plain')
+      console.log(resourceId, project.id, project.resources);
+    });
 
     // Check for overlaps with previously placed projects and adjust top
     let top = 0;
